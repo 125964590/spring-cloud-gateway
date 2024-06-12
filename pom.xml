@@ -6,7 +6,7 @@
 
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-gateway</artifactId>
-	<version>2.1.2.BUILD-SNAPSHOT</version>
+	<version>2.1.6.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Spring Cloud Gateway</name>
@@ -15,16 +15,16 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-build</artifactId>
-		<version>2.1.6.BUILD-SNAPSHOT</version>
+		<version>2.1.11.BUILD-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 	<scm>
-		<url>https://github.com/spring-cloud-incubator/spring-cloud-gateway</url>
+		<url>https://github.com/spring-cloud/spring-cloud-gateway</url>
 		<connection>
-			scm:git:git://github.com/spring-cloud-incubator/spring-cloud-gateway.git
+			scm:git:git://github.com/spring-cloud/spring-cloud-gateway.git
 		</connection>
 		<developerConnection>
-			scm:git:ssh://git@github.com/spring-cloud-incubator/spring-cloud-gateway.git
+			scm:git:ssh://git@github.com/spring-cloud/spring-cloud-gateway.git
 		</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
@@ -52,14 +52,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring-cloud-commons.version>2.1.2.BUILD-SNAPSHOT</spring-cloud-commons.version>
-		<spring-cloud-netflix.version>2.1.2.BUILD-SNAPSHOT</spring-cloud-netflix.version>
+		<spring-cloud-commons.version>2.1.6.BUILD-SNAPSHOT</spring-cloud-commons.version>
+		<spring-cloud-netflix.version>2.1.6.BUILD-SNAPSHOT</spring-cloud-netflix.version>
 		<embedded-redis.version>0.6</embedded-redis.version>
+		<blockhound.version>1.0.1.RELEASE</blockhound.version>
 		<maven-checkstyle-plugin.includeTestSourceDirectory>true
 		</maven-checkstyle-plugin.includeTestSourceDirectory>
 		<maven-checkstyle-plugin.failsOnError>true</maven-checkstyle-plugin.failsOnError>
 		<maven-checkstyle-plugin.failOnViolation>true
 		</maven-checkstyle-plugin.failOnViolation>
+		<junit-jupiter.version>5.5.2</junit-jupiter.version>
+		<maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
+		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -84,6 +88,13 @@
 				<version>${spring-cloud-netflix.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit-jupiter.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -125,6 +136,11 @@
 				<groupId>com.github.kstyrc</groupId>
 				<artifactId>embedded-redis</artifactId>
 				<version>${embedded-redis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.projectreactor.tools</groupId>
+				<artifactId>blockhound-junit-platform</artifactId>
+				<version>${blockhound.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

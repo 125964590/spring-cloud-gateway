@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+
 import reactor.netty.resources.ConnectionProvider;
 import reactor.netty.tcp.SslProvider;
 
@@ -35,6 +37,7 @@ import org.springframework.boot.context.properties.DeprecatedConfigurationProper
 import org.springframework.boot.web.server.WebServerException;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.unit.DataSize;
 
 /**
  * Configuration properties for the Netty {@link reactor.netty.http.client.HttpClient}.
@@ -48,6 +51,9 @@ public class HttpClientProperties {
 	/** The response timeout. */
 	private Duration responseTimeout;
 
+	/** The max response header size. */
+	private DataSize maxHeaderSize;
+
 	/** Pool configuration for Netty HttpClient. */
 	private Pool pool = new Pool();
 
@@ -56,6 +62,9 @@ public class HttpClientProperties {
 
 	/** SSL configuration for Netty HttpClient. */
 	private Ssl ssl = new Ssl();
+
+	/** Enables wiretap debugging for Netty HttpClient. */
+	private boolean wiretap;
 
 	public Integer getConnectTimeout() {
 		return connectTimeout;
@@ -71,6 +80,15 @@ public class HttpClientProperties {
 
 	public void setResponseTimeout(Duration responseTimeout) {
 		this.responseTimeout = responseTimeout;
+	}
+
+	@Max(Integer.MAX_VALUE)
+	public DataSize getMaxHeaderSize() {
+		return maxHeaderSize;
+	}
+
+	public void setMaxHeaderSize(DataSize maxHeaderSize) {
+		this.maxHeaderSize = maxHeaderSize;
 	}
 
 	public Pool getPool() {
@@ -97,11 +115,27 @@ public class HttpClientProperties {
 		this.ssl = ssl;
 	}
 
+	public boolean isWiretap() {
+		return this.wiretap;
+	}
+
+	public void setWiretap(boolean wiretap) {
+		this.wiretap = wiretap;
+	}
+
 	@Override
 	public String toString() {
-		return new ToStringCreator(this).append("connectTimeout", connectTimeout)
-				.append("responseTimeout", responseTimeout).append("pool", pool)
-				.append("proxy", proxy).append("ssl", ssl).toString();
+		// @formatter:off
+		return new ToStringCreator(this)
+				.append("connectTimeout", connectTimeout)
+				.append("responseTimeout", responseTimeout)
+				.append("maxHeaderSize", maxHeaderSize)
+				.append("pool", pool)
+				.append("proxy", proxy)
+				.append("ssl", ssl)
+				.append("wiretap", wiretap)
+				.toString();
+		// @formatter:on
 	}
 
 	public static class Pool {
